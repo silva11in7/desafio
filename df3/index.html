@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nome da Empresa — Projetos de Automação Residencial</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --apple-bg: #000000;
+            --apple-card: #161617;
+            --apple-text: #f5f5f7;
+            --apple-blue: #0071e3;
+            --apple-gray: #86868b;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--apple-bg);
+            color: var(--apple-text);
+            margin: 0;
+            -webkit-font-smoothing: antialiased;
+            scroll-behavior: smooth;
+        }
+
+        /* Nav Estilo Apple Business */
+        nav {
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 9999;
+            border-bottom: 0.5px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 5.5rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+        }
+
+        .subheadline {
+            font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+            color: var(--apple-gray);
+            font-weight: 400;
+            max-width: 700px;
+        }
+
+        /* Botões Empresariais */
+        .btn-primary {
+            background-color: var(--apple-blue);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 980px;
+            font-size: 17px;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background-color: #0077ed;
+            transform: scale(1.02);
+        }
+
+        .btn-secondary {
+            color: var(--apple-blue);
+            font-size: 18px;
+            font-weight: 400;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-secondary:hover {
+            text-decoration: underline;
+        }
+
+        /* Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1.2s cubic-bezier(0.21, 0.6, 0.35, 1), transform 1.2s cubic-bezier(0.21, 0.6, 0.35, 1);
+            will-change: transform, opacity;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+
+        /* Bento Grid */
+        .bento-item {
+            background: var(--apple-card);
+            border-radius: 28px;
+            height: 100%;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .bento-item-light:hover {
+            background: #ffffff;
+            transform: translateY(-8px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.08);
+        }
+
+        .bento-item-dark:hover {
+            background: #2c2c2e;
+            transform: translateY(-8px);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .section-inner {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .card-bg-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.15;
+            transition: opacity 0.6s;
+            z-index: 0;
+        }
+
+        .bento-item:hover .card-bg-img {
+            opacity: 0.3;
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.9)), 
+                        url('https://images.unsplash.com/photo-1558002038-1037906d9971?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+        }
+
+        .ai-consultant {
+            background: linear-gradient(145deg, #111, #000);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px;
+        }
+
+        textarea {
+            background: #1c1c1e;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            padding: 18px;
+            width: 100%;
+            font-size: 16px;
+            outline: none;
+            margin-top: 10px;
+        }
+
+        .loading-dots:after {
+            content: ' .';
+            animation: dots 1.5s infinite;
+        }
+
+        @keyframes dots {
+            0% { content: ' .'; }
+            33% { content: ' ..'; }
+            66% { content: ' ...'; }
+        }
+
+        #whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            z-index: 1000;
+            transition: transform 0.3s;
+        }
+
+        #whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="h-[52px] flex items-center justify-center">
+        <div class="section-inner w-full flex justify-between items-center text-[13px] tracking-tight">
+            <div class="flex items-center gap-8">
+                <a href="#" class="text-[19px] font-bold tracking-tighter text-white">SUA MARCA</a>
+                <div class="hidden md:flex gap-6 font-normal opacity-70 text-white">
+                    <a href="#servicos" class="hover:opacity-100 transition">Serviços</a>
+                    <a href="#consultoria" class="hover:opacity-100 transition">Consultoria Digital</a>
+                    <a href="#contato" class="hover:opacity-100 transition">Contato</a>
+                </div>
+            </div>
+            <a href="https://wa.me/SEUNUMERO" class="btn-primary py-1.5 px-4 text-[12px]">Pedir Orçamento</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="relative h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden">
+        <div class="hero-bg"></div>
+        <div class="reveal active">
+            <span class="text-blue-400 font-semibold mb-4 block uppercase tracking-[0.2em] text-[10px]">Engenharia de Conforto</span>
+            <h1 class="hero-title mb-8 text-white">Tecnologia que entende<br>o seu estilo de vida.</h1>
+            <p class="subheadline mb-12 mx-auto text-gray-300">
+                Projetamos sistemas de automação que integram iluminação, áudio, vídeo e segurança numa única experiência intuitiva e luxuosa.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <a href="#contato" class="btn-primary px-10 shadow-2xl shadow-blue-500/20">Agendar Visita Técnica</a>
+                <a href="#servicos" class="btn-secondary text-white">Conheça nossos projetos <i class="fa-solid fa-chevron-right text-[10px] ml-1"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Serviços Bento Grid -->
+    <section id="servicos" class="py-32 bg-[#f5f5f7] text-[#1d1d1f]">
+        <div class="section-inner">
+            <div class="mb-20 reveal">
+                <h2 class="text-4xl md:text-5xl font-bold tracking-tight">Soluções completas<br>para casas inteligentes.</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+                <!-- Iluminação -->
+                <div class="md:col-span-8 bento-item bento-item-light bg-white reveal">
+                    <div class="card-content h-full flex flex-col justify-between p-10">
+                        <div>
+                            <i class="fa-solid fa-lightbulb text-blue-600 text-3xl mb-6"></i>
+                            <h3 class="text-3xl font-bold mb-4">Iluminação Arquitetónica</h3>
+                            <p class="text-gray-500 max-w-sm">Cenas personalizadas para cada momento do dia, integradas com a luz natural e controladas por voz ou painel tátil.</p>
+                        </div>
+                        <div class="mt-12 h-64 bg-gray-100 rounded-2xl overflow-hidden shadow-inner border border-gray-200">
+                             <img src="https://images.unsplash.com/photo-1556912173-3bb406ef7e77?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover" alt="Sala de Jantar Automatizada">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Som e Vídeo -->
+                <div class="md:col-span-4 bento-item bento-item-light bg-white reveal delay-1">
+                    <div class="card-content p-10 h-full flex flex-col">
+                        <i class="fa-solid fa-music text-blue-600 text-3xl mb-6"></i>
+                        <h3 class="text-2xl font-bold mb-4">Áudio & Vídeo Hi-Fi</h3>
+                        <p class="text-gray-500 text-sm mb-6">Sistemas Multiroom e Home Cinema de alta performance.</p>
+                        <div class="flex-grow rounded-xl overflow-hidden shadow-inner border border-gray-100">
+                            <img src="https://images.unsplash.com/photo-1545013149-ed7942328979?q=80&w=1974&auto=format&fit=crop" class="w-full h-full object-cover" alt="Home Cinema Luxuoso">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Segurança (REVISADO COM FOTO VISÍVEL) -->
+                <div class="md:col-span-5 bento-item bento-item-dark bg-[#1c1c1e] text-white reveal">
+                    <div class="card-content p-10 h-full flex flex-col justify-between">
+                        <div>
+                            <i class="fa-solid fa-shield-halved text-blue-500 text-3xl mb-6"></i>
+                            <h3 class="text-2xl font-bold mb-4">Segurança Avançada</h3>
+                            <p class="text-gray-400 text-sm mb-8">Monitorização 24h com IA, reconhecimento facial e acesso remoto total.</p>
+                        </div>
+                        <div class="rounded-2xl overflow-hidden h-48 border border-white/10">
+                            <img src="https://images.unsplash.com/photo-1558002038-1037906d9971?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover" alt="Fechadura Inteligente">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wi-Fi -->
+                <div class="md:col-span-7 bento-item bento-item-light bg-white reveal delay-2">
+                    <div class="card-content p-10 h-full flex flex-col justify-between">
+                        <div>
+                            <i class="fa-solid fa-wifi text-blue-600 text-3xl mb-6"></i>
+                            <h3 class="text-2xl font-bold mb-4">Redes Robustas (Wi-Fi 6)</h3>
+                            <p class="text-gray-500 text-sm mb-8">Redes de alta velocidade que cobrem cada milímetro da sua residência sem interrupções.</p>
+                        </div>
+                        <div class="h-48 rounded-xl overflow-hidden border border-gray-200 shadow-inner">
+                             <img src="https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover" alt="Equipamento de Rede Moderna">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Consultoria com IA -->
+    <section id="consultoria" class="py-32 bg-black px-4">
+        <div class="section-inner">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="reveal">
+                    <h2 class="text-5xl font-bold mb-6 tracking-tight text-white">Planeie o seu projeto<br>em segundos.</h2>
+                    <p class="text-xl text-gray-400 mb-8 leading-relaxed">
+                        A nossa consultoria digital utiliza inteligência para entender as suas necessidades e sugerir as melhores tecnologias para o seu perfil.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4">
+                            <span class="w-8 h-8 rounded-full bg-blue-600/20 text-blue-500 flex items-center justify-center font-bold text-[10px]">1</span>
+                            <p class="text-gray-400 text-sm">Descreva o que deseja automatizar.</p>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="w-8 h-8 rounded-full bg-blue-600/20 text-blue-500 flex items-center justify-center font-bold text-[10px]">2</span>
+                            <p class="text-gray-400 text-sm">A nossa IA analisa a viabilidade técnica.</p>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="w-8 h-8 rounded-full bg-blue-600/20 text-blue-500 flex items-center justify-center font-bold text-[10px]">3</span>
+                            <p class="text-gray-400 text-sm">Receba uma previsão de investimento.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal ai-consultant">
+                    <p class="text-[11px] font-bold text-blue-500 uppercase tracking-widest mb-4">Assistente de Projeto</p>
+                    <p class="text-sm text-gray-400 mb-6 italic">"Gostaria de automatizar o meu home theater e a iluminação da sala..."</p>
+                    <textarea id="ai-input" rows="3" placeholder="O que imagina para a sua casa?"></textarea>
+                    
+                    <button onclick="generateProposal()" id="ai-btn" class="btn-primary w-full mt-6 py-4">
+                        Analisar Projeto ✨
+                    </button>
+
+                    <div id="ai-response-container" class="hidden mt-8">
+                        <div id="ai-response" class="bg-white/5 p-6 rounded-2xl border border-white/5 text-sm text-gray-300 leading-relaxed"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contato -->
+    <section id="contato" class="py-32 bg-white text-[#1d1d1f]">
+        <div class="section-inner text-center">
+            <h2 class="text-5xl font-bold mb-6 tracking-tight reveal">Pronto para transformar a sua casa?</h2>
+            <p class="text-xl text-gray-500 mb-12 max-w-2xl mx-auto reveal delay-1">Agende uma demonstração no nosso showroom ou solicite uma visita técnica na sua obra.</p>
+            <div class="flex flex-col md:flex-row justify-center gap-8 reveal delay-2">
+                <a href="tel:SEUNUMERO" class="flex flex-col items-center p-8 bg-[#f5f5f7] rounded-3xl w-full md:w-64 hover:bg-gray-200 transition-all duration-300">
+                    <i class="fa-solid fa-phone text-blue-600 mb-4 text-2xl"></i>
+                    <span class="font-bold">Ligar agora</span>
+                </a>
+                <a href="https://wa.me/SEUNUMERO" class="flex flex-col items-center p-8 bg-[#f5f5f7] rounded-3xl w-full md:w-64 hover:bg-gray-200 transition-all duration-300">
+                    <i class="fa-brands fa-whatsapp text-green-500 mb-4 text-2xl"></i>
+                    <span class="font-bold">WhatsApp</span>
+                </a>
+                <a href="mailto:contato@empresa.com" class="flex flex-col items-center p-8 bg-[#f5f5f7] rounded-3xl w-full md:w-64 hover:bg-gray-200 transition-all duration-300">
+                    <i class="fa-solid fa-envelope text-gray-600 mb-4 text-2xl"></i>
+                    <span class="font-bold">E-mail</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#1d1d1f] text-white pt-24 pb-12 px-6">
+        <div class="section-inner">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+                <div>
+                    <h4 class="text-xl font-bold mb-4 tracking-tighter">NOME DA EMPRESA</h4>
+                    <p class="text-gray-500 text-xs leading-relaxed">Especialistas em integração de sistemas e tecnologia residencial de alto padrão.</p>
+                </div>
+                <div class="flex flex-col gap-3 text-xs text-gray-500">
+                    <span class="text-gray-300 font-bold">Navegação</span>
+                    <a href="#" class="hover:text-white transition">Sobre nós</a>
+                    <a href="#" class="hover:text-white transition">Showroom</a>
+                    <a href="#" class="hover:text-white transition">Projetos Executados</a>
+                </div>
+                <div class="flex flex-col gap-3 text-xs text-gray-500">
+                    <span class="text-gray-300 font-bold">Legal</span>
+                    <a href="#" class="hover:text-white transition">Termos de Serviço</a>
+                    <a href="#" class="hover:text-white transition">Política de Privacidade</a>
+                </div>
+                <div class="flex flex-col gap-3 text-xs text-gray-500">
+                    <span class="text-gray-300 font-bold">Redes Sociais</span>
+                    <a href="#" class="hover:text-white transition">Instagram</a>
+                    <a href="#" class="hover:text-white transition">LinkedIn</a>
+                </div>
+            </div>
+            <div class="text-[10px] text-gray-600 border-t border-white/5 pt-8 flex justify-between">
+                <p>© 2024 Nome da Empresa Inteligente Ltda.</p>
+                <p>CNPJ: 00.000.000/0001-00</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/SEUNUMERO" id="whatsapp-float" target="_blank">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <script>
+        const apiKey = ""; 
+
+        async function generateProposal() {
+            const input = document.getElementById('ai-input').value;
+            const btn = document.getElementById('ai-btn');
+            const container = document.getElementById('ai-response-container');
+            const responseDiv = document.getElementById('ai-response');
+
+            if (!input.trim()) return;
+
+            btn.disabled = true;
+            btn.innerText = "Analisando viabilidade...";
+            container.classList.remove('hidden');
+            responseDiv.innerHTML = '<span class="loading-dots">Consultando os nossos especialistas</span>';
+
+            const systemPrompt = "Você é o consultor técnico de uma empresa de automação residencial de luxo em Portugal. O cliente descreverá o que deseja. Você deve responder de forma profissional, educada e técnica, listando brevemente as tecnologias necessárias e convidando para uma visita técnica. Máximo 4 frases.";
+
+            try {
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+                const payload = {
+                    contents: [{ parts: [{ text: input }] }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] }
+                };
+
+                const res = await fetch(url, {
+                    method: 'POST',
+                    body: JSON.stringify(payload),
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                const data = await res.json();
+                const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                responseDiv.innerText = text || "Não foi possível processar agora. Por favor, entre em contacto via WhatsApp.";
+            } catch (error) {
+                responseDiv.innerText = "O nosso sistema de IA está offline. Por favor, fale connosco pelo telefone acima.";
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "Analisar Projeto ✨";
+            }
+        }
+
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
